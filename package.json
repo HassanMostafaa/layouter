@@ -1,0 +1,76 @@
+{
+  "name": "layouter",
+  "version": "1.0.0",
+  "description": "Layouter is a lightweight React utility for creating responsive masonry-style layouts.",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsc --watch",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HassanMostafaa/layouter.git"
+  },
+  "keywords": [
+    "react",
+    "react-grid",
+    "grid",
+    "masonry",
+    "flex",
+    "flexbox",
+    "responsive",
+    "layout",
+    "react-layout",
+    "react-masonry",
+    "columns",
+    "dynamic-grid",
+    "react-flex",
+    "auto-layout",
+    "waterfall",
+    "react-waterfall",
+    "virtualized-grid",
+    "masonry-layout",
+    "react-columns",
+    "grid-system",
+    "react-flex-layout",
+    "ui-grid",
+    "react-component"
+  ],
+  "author": "Hassan Mohamed",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HassanMostafaa/layouter/issues"
+  },
+  "homepage": "https://github.com/HassanMostafaa/layouter#readme",
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0 || >=18.0.0",
+    "react-dom": ">=17.0.0 || >=18.0.0"
+  },
+  "devDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  }
+}
