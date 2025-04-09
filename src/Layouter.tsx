@@ -1,5 +1,4 @@
 import * as React from "react";
-import { JSX } from "react";
 
 export type LayouterProps = {
   cols: number;
@@ -61,8 +60,8 @@ export default function Layouter({
 
     const shortestColIndex = colHeights.indexOf(Math.min(...colHeights));
 
-    if (colItems[shortestColIndex]) colItems[shortestColIndex].push(item);
-    if (colHeights[shortestColIndex]) colHeights[shortestColIndex] += height;
+    colItems[shortestColIndex]!.push(item);
+    colHeights[shortestColIndex]! += height;
   });
 
   // Step 3: Render columns
