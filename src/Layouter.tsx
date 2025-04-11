@@ -9,6 +9,11 @@ export type LayouterProps = {
   getHeight?: (item: any) => number;
   estimateHeight?: (item: any) => number;
   mediaHeight?: number;
+  breakpoints?: {
+    [width: number]: {
+      cols: number;
+    };
+  };
 };
 
 // Recursive function to estimate the total text length in an item
@@ -46,12 +51,44 @@ export default function Layouter({
   getHeight,
   estimateHeight,
   mediaHeight,
+  breakpoints,
 }: LayouterProps) {
-  // Step 1: Setup columns and height trackers
-  const colItems: any[][] = Array.from({ length: cols }, () => []);
-  const colHeights: number[] = Array.from({ length: cols }, () => 0);
+  const [currentCols, setCurrentCols] = React.useState(cols);
 
-  // Step 2: Distribute itemsl
+  React.useEffect(() => {
+    function handleResize() {
+      if (!breakpoints) return setCurrentCols(cols);
+
+      const width = window.innerWidth;
+      const matchingBreakpoint = Object.keys(breakpoints)
+        .map(Number)
+        .sort((a, b) => a - b)
+        .reverse()
+        .find((bp) => width >= bp);
+
+      if (matchingBreakpoint) {
+        setCurrentCols(breakpoints[matchingBreakpoint].cols);
+      } else {
+        setCurrentCols(cols);
+      }
+    }
+
+    if (typeof window !== "undefined") {
+      handleResize();
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
+
+    // Return a noop function in case it's running in a non-window env (like SSR)
+    return () => {};
+  }, [breakpoints, cols]);
+
+  const colItems: any[][] = Array.from({ length: currentCols }, () => []);
+  const colHeights: number[] = Array.from({ length: currentCols }, () => 0);
+
   items.forEach((item) => {
     const height =
       getHeight?.(item) ??
@@ -59,12 +96,10 @@ export default function Layouter({
       estimateHeightFromItem(item, mediaHeight);
 
     const shortestColIndex = colHeights.indexOf(Math.min(...colHeights));
-
     colItems[shortestColIndex]!.push(item);
     colHeights[shortestColIndex]! += height;
   });
 
-  // Step 3: Render columns
   return (
     <div style={{ display: "flex", gap }}>
       {colItems.map((column, colIndex) => (
@@ -73,14 +108,12 @@ export default function Layouter({
           style={{ flex: 1, display: "flex", flexDirection: "column", gap }}
         >
           {column.map((item, i) => (
-            <>
-              <RenderItem
-                key={`col-${colIndex}id-${
-                  getId?.(item) ?? item.id ?? `index-${i}`
-                }`}
-                item={item}
-              />
-            </>
+            <RenderItem
+              key={`col-${colIndex}id-${
+                getId?.(item) ?? item.id ?? `index-${i}`
+              }`}
+              item={item}
+            />
           ))}
         </div>
       ))}
