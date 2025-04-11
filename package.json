@@ -1,5 +1,5 @@
 {
-  "name": "layouter",
+  "name": "react-broken-layouter",
   "version": "1.0.0",
   "description": "Layouter is a lightweight React utility for creating responsive masonry-style layouts.",
   "main": "dist/index.js",
@@ -11,8 +11,9 @@
   "scripts": {
     "dev": "tsc --watch",
     "clean": "rimraf dist",
-    "build": "npm run clean && tsc",
-    "prepublishOnly": "npm run build"
+    "build": "npm run clean && tsc && tsc -p tsconfig.esm.json",
+    "prepublishOnly": "npm run build",
+    "link": "npm link"
   },
   "repository": {
     "type": "git",

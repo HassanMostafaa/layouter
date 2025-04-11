@@ -1,139 +1,93 @@
-# Layouter
+# React Broken Layouter
 
-Layouter is a lightweight and flexible React utility that intelligently arranges components into a responsive, masonry-style layout using a column-based strategy. It supports dynamic content heights and is ideal for building Pinterest-like grids, content dashboards, and flexible multi-column interfaces.
-
----
+A lightweight React utility for creating responsive masonry-style layouts with automatic height estimation and column distribution.
 
 ## Features
 
-- 📐 Dynamic column balancing based on item height
-- 🧱 Supports 1 to 4 columns
-- 🎨 Accepts any custom React component as a render prop
-- 🧠 Optional `getHeight` and `getId` functions for data flexibility
-- ⚡ Fast and minimal — no dependencies
-- 💅 Fully customizable and styled by you
-
----
+- 🎯 Simple and intuitive API
+- 📱 Responsive column-based layout
+- 📏 Automatic height estimation
+- 🎨 Customizable gap between items
+- 🔄 Support for dynamic content
+- 🚀 Zero dependencies (except React)
+- 📦 TypeScript support
 
 ## Installation
 
 ```bash
-npm install @your-namespace/layouter
+npm install react-broken-layouter
+# or
+yarn add react-broken-layouter
 ```
-
-or
-
-```bash
-yarn add @your-namespace/layouter
-```
-
----
 
 ## Usage
 
 ```tsx
-import { Layouter } from "@your-namespace/layouter";
+import Layouter from "react-broken-layouter";
 
+// Example data
 const items = [
-  { id: 1, title: "Card 1", height: 120 },
-  { id: 2, title: "Card 2", height: 220 },
-  { id: 3, title: "Card 3", height: 80 },
+  { id: 1, content: "Item 1" },
+  { id: 2, content: "Item 2" },
   // ... more items
 ];
 
-const MyCard = ({ item }: { item: any }) => (
-  <div style={{ height: item.height, background: "#f1f1f1", padding: 16 }}>
-    <h4>{item.title}</h4>
-  </div>
+// Example render component
+const Item = ({ item }) => (
+  <div style={{ padding: "1rem", background: "#f0f0f0" }}>{item.content}</div>
 );
 
-export default function MyPage() {
-  return <Layouter cols={3} items={items} render={MyCard} gap={16} />;
+function App() {
+  return (
+    <Layouter
+      cols={3}
+      items={items}
+      render={Item}
+      gap={16}
+      getId={(item) => item.id}
+    />
+  );
 }
 ```
-
----
 
 ## Props
 
-### `cols: number` (required)
-
-Number of columns to distribute items across (max: 4).
-
-### `items: any[]` (required)
-
-Array of items to render.
-
-### `render: React.FunctionComponent<{ item: any }>` (required)
-
-A React component or element that takes a single `item` prop and renders it.
-
-### `gap?: number`
-
-Spacing (in pixels) between columns and rows. Defaults to `16`.
-
-### `getId?: (item: any) => string | number`
-
-Optional function to extract a unique ID for each item (used as the React key).
-
-### `getHeight?: (item: any) => number`
-
-Optional function to extract the item height. If not provided, Layouter will use `item.height` directly.
-
----
-
-## Example with JSX Render Prop
-
-```tsx
-<Layouter
-  cols={2}
-  items={data}
-  getHeight={(item) => item.meta?.height}
-  getId={(item) => item.uuid}
-  render={(item) => (
-    <div key={item.uuid} style={{ height: item.meta?.height }}>
-      {item.title}
-    </div>
-  )}
-/>
-```
-
----
+| Prop             | Type                            | Required | Default | Description                                    |
+| ---------------- | ------------------------------- | -------- | ------- | ---------------------------------------------- |
+| `cols`           | number                          | Yes      | -       | Number of columns in the layout                |
+| `items`          | any[]                           | Yes      | -       | Array of items to be displayed                 |
+| `render`         | React.FC<{ item: any }>         | Yes      | -       | Component to render each item                  |
+| `gap`            | number                          | No       | 16      | Gap between items in pixels                    |
+| `getId`          | (item: any) => string \| number | No       | -       | Function to get unique ID for each item        |
+| `getHeight`      | (item: any) => number           | No       | -       | Function to get exact height for an item       |
+| `estimateHeight` | (item: any) => number           | No       | -       | Custom function to estimate item height        |
+| `mediaHeight`    | number                          | No       | -       | Additional height to account for media content |
 
 ## How It Works
 
-Layouter tracks the total height of each column and adds each new item to the shortest column available. This helps visually balance the layout even when items have varying heights. You can define the height either directly on the item (via `item.height`) or through a custom `getHeight` function.
+The Layouter component:
 
----
+1. Estimates the height of each item based on content length
+2. Distributes items across columns to maintain balanced heights
+3. Renders items in a responsive grid layout
 
-## TypeScript Support
+## Development
 
-Layouter is fully typed and supports generics so you can strongly type your item data:
+```bash
+# Install dependencies
+npm install
 
-```tsx
-interface MyCardData {
-  id: string;
-  title: string;
-  height: number;
-}
+# Run development build
+npm run dev
 
-<Layouter<MyCardData>
-  cols={3}
-  items={myData}
-  render={({ item }) => <MyCard item={item} />}
-/>;
+# Build for production
+npm run build
 ```
-
----
-
-## Roadmap
-
-- [ ] Auto-measure DOM heights (dynamic rendering)
-- [ ] Drag-and-drop support
-- [ ] SSR-safe dynamic layout (e.g., for Next.js)
-
----
 
 ## License
 
-MIT © YourName or YourOrg
+MIT © [Hassan Mohamed](https://github.com/HassanMostafaa)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.

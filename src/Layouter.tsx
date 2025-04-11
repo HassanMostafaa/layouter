@@ -33,7 +33,7 @@ function estimateTextLengthFromItem(item: any): number {
 // Estimate height from text length and optional media
 function estimateHeightFromItem(item: any, mediaHeight?: number): number {
   const textLength = estimateTextLengthFromItem(item);
-  const baseHeight = 180 + textLength * 0.35;
+  const baseHeight = 40 + textLength * 0.35;
   return mediaHeight ? baseHeight + mediaHeight : baseHeight;
 }
 
