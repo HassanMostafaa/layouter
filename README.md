@@ -47,6 +47,17 @@ import Layouter from "react-broken-layouter";
 />
 ```
 
+or
+
+```tsx
+<Layouter
+  cols={3}
+  items={items}
+  render={({Item}) => <YourComponent {...Item}>}
+  getHeight={(item) => item.height} // Provide explicit heights
+/>
+```
+
 ### Not Recommended
 
 - ❌ Server Components without 'use client' directive
@@ -97,6 +108,18 @@ function App() {
     />
   );
 }
+```
+
+or render value as a function to control how to pass data to your own "Item" Component
+
+```tsx
+<Layouter
+      cols={3}
+      items={items}
+      render={({Item}) => <YourComponent {...Item} >}
+      gap={16}
+      getId={(item) => item.id}
+    />
 ```
 
 ### Utility Functions
