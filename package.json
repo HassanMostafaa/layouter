@@ -1,6 +1,6 @@
 {
   "name": "react-broken-layouter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Layouter is a lightweight React utility for creating responsive masonry-style layouts.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
