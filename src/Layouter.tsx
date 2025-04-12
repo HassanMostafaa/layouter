@@ -1,13 +1,13 @@
 import * as React from "react";
 
-export type LayouterProps = {
+export type LayouterProps<T = any> = {
   cols: number;
-  items: any[];
-  render: React.FC<{ item: any }>;
+  items: T[];
+  render: React.FC<{ item: T }> | ((props: { item: T }) => React.ReactNode);
   gap?: number;
-  getId?: (item: any) => string | number;
-  getHeight?: (item: any) => number;
-  estimateHeight?: (item: any) => number;
+  getId?: (item: T) => string | number;
+  getHeight?: (item: T) => number;
+  estimateHeight?: (item: T) => number;
   mediaHeight?: number;
   breakpoints?: {
     [width: number]: {
@@ -42,7 +42,7 @@ function estimateHeightFromItem(item: any, mediaHeight?: number): number {
   return mediaHeight ? baseHeight + mediaHeight : baseHeight;
 }
 
-export default function Layouter({
+export default function Layouter<T>({
   cols,
   items,
   render: RenderItem,
@@ -52,7 +52,7 @@ export default function Layouter({
   estimateHeight,
   mediaHeight,
   breakpoints,
-}: LayouterProps) {
+}: LayouterProps<T>) {
   const [currentCols, setCurrentCols] = React.useState(cols);
 
   React.useEffect(() => {
