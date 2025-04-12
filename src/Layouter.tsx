@@ -3,7 +3,12 @@ import * as React from "react";
 export type LayouterProps<T = any> = {
   cols: number;
   items: T[];
-  render: React.FC<{ item: T }> | ((props: { item: T }) => React.ReactNode);
+  render:
+    | React.FC<{ item: T }>
+    | Element
+    | ((props: { item: T }) => React.ReactNode)
+    | ((props: { item: T }) => Element)
+    | any;
   gap?: number;
   getId?: (item: T) => string | number;
   getHeight?: (item: T) => number;
