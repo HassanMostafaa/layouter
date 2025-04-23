@@ -83,7 +83,7 @@
   "bugs": {
     "url": "https://github.com/HassanMostafaa/layouter/issues"
   },
-  "homepage": "https://github.com/HassanMostafaa/layouter#readme",
+  "homepage": "https://react-broken-layouter.vercel.app/",
   "engines": {
     "node": ">=14",
     "npm": ">=6"
@@ -93,8 +93,8 @@
     "react-dom": ">=17.0.0 || >=18.0.0"
   },
   "devDependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "rimraf": "^6.0.1",
     "typescript": "^5.0.0"
   },
